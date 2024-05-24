@@ -26,16 +26,6 @@ Develop Interactive Drawing Tool is a web application that allows users to inter
 ![fs](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/cd68fe3b-9efb-4b20-a46e-4187d8574857)
 
 
-## Frontend
-
-- components/: React components for the drawing tools and toolbar.
-- pages/: Next.js pages, including the main map view.
-- styles/: CSS files are used to style the application.
-
-## Backend
-
-- api/: Django app containing models, views, serializers, and URLs for the API.
-
 # Setup Instructions
 
 Clone the repository:

@@ -23,7 +23,7 @@ Develop Interactive Drawing Tool is a web application that allows users to inter
 
 # Folder Structure
 
-![fs](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/8a9231e6-06e9-4ff3-8238-ca96ca15128a)
+![fs](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/cd68fe3b-9efb-4b20-a46e-4187d8574857)
 
 
 ## Frontend

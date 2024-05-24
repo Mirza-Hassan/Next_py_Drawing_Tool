@@ -10,7 +10,7 @@ Develop Interactive Drawing Tool is a web application that allows users to inter
 - [Setup Instructions](#setup-instructions)
 - [Screenshot](#screenshot)
 
-# Technologies Used
+# Technologies
 
 - Frontend: Next.js, OpenLayers
 - Backend: Django, Django REST framework
@@ -75,5 +75,6 @@ python manage.py runserver
 ```
 
 # Screenshot
+![screenshot](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/87244ee3-0dfd-4245-a40d-a7e4ca9d60a0)
 
 

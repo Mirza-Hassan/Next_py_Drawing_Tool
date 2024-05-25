@@ -8,6 +8,7 @@ Develop Interactive Drawing Tool is a web application that allows users to inter
 - [Pre Requisites](#pre-requisites)
 - [Folder Structure](#folder-structure)
 - [Setup Instructions](#setup-instructions)
+- [API Testing](#api-testing)
 - [Screenshot](#screenshot)
 
 # Technologies
@@ -55,7 +56,7 @@ cd backend
 ```
 Install dependencies:
 ```
-pip install -r requirements.txt
+pip install django djangorestframework
 ```
 Create and apply migrations:
 
@@ -76,6 +77,22 @@ python manage.py runserver
 Test your API endpoint:
 
 With the development server running, navigate to http://localhost:8000/api/shapes/. If you have populated data, it should be displayed here.
+
+# API Testing 
+
+You can test the API endpoints using tools like Postman or curl.
+
+Create a new shape: POST /api/shapes/
+```
+{
+    "shape_type": "circle",
+    "geometry": {
+        "center": [40.73061, -73.935242],
+        "radius": 1000
+    }
+}
+```
+
 
 # Screenshot
 ![screenshot](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/87244ee3-0dfd-4245-a40d-a7e4ca9d60a0)

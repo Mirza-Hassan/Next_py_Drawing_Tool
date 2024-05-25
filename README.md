@@ -94,7 +94,7 @@ You can test the API endpoints using tools like Postman.
 Create a new shape: POST /api/shapes/
 ```
 {
-      "shape_type": "circle",
+      "shape_type": "star",
       "geometry": [[
         [-73.935242, 40.730610],
         [-73.935242, 40.731610],

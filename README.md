@@ -57,15 +57,25 @@ Install dependencies:
 ```
 pip install -r requirements.txt
 ```
-Apply migrations and create a superuser:
+Create and apply migrations:
+
+Ensure your database schema is up to date with your models by running the following commands:
 ```
+python manage.py makemigrations
 python manage.py migrate
+
+```
+Create a superuser to access the admin panel:
+```
 python manage.py createsuperuser
 ```
 Run the development server:
 ```
 python manage.py runserver
 ```
+Test your API endpoint:
+
+With the development server running, navigate to http://localhost:8000/api/shapes/. If you have populated data, it should be displayed here.
 
 # Screenshot
 ![screenshot](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/87244ee3-0dfd-4245-a40d-a7e4ca9d60a0)

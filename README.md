@@ -94,7 +94,6 @@ Create a new shape: POST /api/shapes/
         ]
     ]
 }
-
 ```
 
 

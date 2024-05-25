@@ -91,10 +91,25 @@ With the development server running, navigate to http://localhost:8000/api/shape
 
 You can test the API endpoints using tools like Postman or shapes.curl file.
 
-Create a new shape: POST /api/shapes/
+Create a new shape: 
+
+URL: /api/shapes/
+
+Method: POST
+
+Body Parameters:
+
+shape_type (string): Type of shape (e.g., "star").
+geometry (array): Coordinates as nested arrays.
+
+Request Example:
 ```
-{
-      "shape_type": "star",
+curl --location 'http://localhost:8000/api/shapes/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic YWRtaW46MTIz' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE2NjAxMzAzLCJleHAiOjE3MTcwMzMzMDN9.aOVrlr9wq-Ht0cUNXFMi-Wy_8V8W_qj4txw7IxO-jKw; token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE2NjAxMzAzLCJleHAiOjE3MTcwMzMzMDN9.aOVrlr9wq-Ht0cUNXFMi-Wy_8V8W_qj4txw7IxO-jKw' \
+--data '{
+      "shape_type": "circle",
       "geometry": [[
         [-73.935242, 40.730610],
         [-73.935242, 40.731610],
@@ -102,7 +117,7 @@ Create a new shape: POST /api/shapes/
         [-73.934242, 40.730610],
         [-73.935242, 40.730610]
       ]]
-}
+}'
 ```
 
 

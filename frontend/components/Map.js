@@ -1,56 +1,39 @@
-'use client';
+"use client";
 
-import React, { useEffect, useRef, useState } from 'react';
-import 'ol/ol.css';
-import { Map, View } from 'ol';
-import { OSM } from 'ol/source';
-import { Tile as TileLayer } from 'ol/layer';
-import { fromLonLat } from 'ol/proj';
-import { Draw, Select, Modify, Snap } from 'ol/interaction';
-import { Vector as VectorLayer } from 'ol/layer';
-import { Vector as VectorSource } from 'ol/source';
-import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
-import Feature from 'ol/Feature';
-import Polygon from 'ol/geom/Polygon';
-import Circle from 'ol/geom/Circle';
-import { mockShapes } from './mockData';
+import React, { useEffect, useRef, useState } from "react";
+import "ol/ol.css";
+import { Map, View } from "ol";
+import { OSM } from "ol/source";
+import { Tile as TileLayer } from "ol/layer";
+import { fromLonLat } from "ol/proj";
+import { Draw, Select, Modify, Snap } from "ol/interaction";
+import { Vector as VectorLayer } from "ol/layer";
+import { Vector as VectorSource } from "ol/source";
+import { saveShapeData } from "./shapeService";
+import { Circle as CircleStyle, Fill, Stroke, Style } from "ol/style";
+import Polygon from "ol/geom/Polygon";
 
 const DrawingMap = ({ drawType }) => {
   const mapElement = useRef();
   const [map, setMap] = useState(null);
   const [draw, setDraw] = useState(null);
+  const source = new VectorSource({ wrapX: false });
 
   useEffect(() => {
     const rasterLayer = new TileLayer({
       source: new OSM(),
     });
 
-    const source = new VectorSource({ wrapX: false });
-
     const vectorLayer = new VectorLayer({
       source: source,
-      style: new Style({
-        fill: new Fill({
-          color: 'rgba(255, 255, 255, 0.2)',
-        }),
-        stroke: new Stroke({
-          color: '#ffcc33',
-          width: 2,
-        }),
-        image: new CircleStyle({
-          radius: 7,
-          fill: new Fill({
-            color: '#ffcc33',
-          }),
-        }),
-      }),
+      style: vectorLayerStyle,
     });
 
     const mapObject = new Map({
       target: mapElement.current,
       layers: [rasterLayer, vectorLayer],
       view: new View({
-        center: fromLonLat([-73.935242, 40.730610]),
+        center: fromLonLat([-73.935242, 40.73061]),
         zoom: 10,
       }),
     });
@@ -66,17 +49,6 @@ const DrawingMap = ({ drawType }) => {
     const snap = new Snap({ source: source });
     mapObject.addInteraction(snap);
 
-    // Load mock shapes
-    mockShapes.forEach((shape) => {
-      const feature = new Feature({
-        geometry: shape.shape_type === 'circle'
-          ? new Circle(fromLonLat(shape.geometry[0][0]), 1000)
-          : new Polygon([shape.geometry[0].map(coord => fromLonLat(coord))]),
-        shapeType: shape.shape_type,
-      });
-      source.addFeature(feature);
-    });
-
     return () => mapObject.setTarget(undefined);
   }, []);
 
@@ -86,30 +58,53 @@ const DrawingMap = ({ drawType }) => {
     }
     if (map && drawType) {
       let drawInteraction;
-      if (drawType === 'Star') {
+      if (drawType === "Star") {
         drawInteraction = new Draw({
           source: map.getLayers().item(1).getSource(),
-          type: 'Circle',
+          type: "Circle",
           geometryFunction: createStarGeometryFunction(5, 0.5),
         });
-      } else {
+      } else if (drawType === "Rectangle") {
         drawInteraction = new Draw({
           source: map.getLayers().item(1).getSource(),
-          type: drawType === 'Rectangle' ? 'Polygon' : drawType,
+          type: "Circle",
+          geometryFunction: createRectangleGeometryFunction(),
+        });
+      } else if (drawType === "Circle") {
+        drawInteraction = new Draw({
+          source: map.getLayers().item(1).getSource(),
+          type: "Circle",
         });
       }
 
-      drawInteraction.on('drawend', (event) => {
+      drawInteraction.on("drawend", (event) => {
         const feature = event.feature;
-        const geometry = feature.getGeometry().clone().transform('EPSG:3857', 'EPSG:4326').getCoordinates();
+        let geometry;
+
+        if (drawType === "Circle") {
+          const circleGeom = feature.getGeometry();
+          const radius = circleGeom.getRadius();
+          const center = circleGeom.getCenter();
+          geometry = {
+            center: center,
+            radius: radius,
+          };
+        } else {
+          geometry = feature
+            .getGeometry()
+            .clone()
+            .transform("EPSG:3857", "EPSG:4326")
+            .getCoordinates();
+        }
+
         const shapeType = drawType.toLowerCase();
 
-        console.log('Drawn Shape:', {
+        const shapeData = {
           shape_type: shapeType,
-          geometry: JSON.stringify(geometry),
-        });
+          geometry: geometry,
+        };
 
-        // You can add the mock save logic here if needed
+        saveShapeData(shapeData);
       });
 
       map.addInteraction(drawInteraction);
@@ -117,14 +112,16 @@ const DrawingMap = ({ drawType }) => {
     }
   }, [drawType, map]);
 
-  return <div ref={mapElement} style={{ width: '100%', height: '100vh' }} />;
+  return <div ref={mapElement} style={mapContainer} />;
 };
 
 const createStarGeometryFunction = (points, ratio) => {
   return (coordinates, geometry) => {
     const center = coordinates[0];
     const end = coordinates[1];
-    const radius = Math.sqrt(Math.pow(end[0] - center[0], 2) + Math.pow(end[1] - center[1], 2));
+    const radius = Math.sqrt(
+      Math.pow(end[0] - center[0], 2) + Math.pow(end[1] - center[1], 2)
+    );
     const angle = Math.atan2(end[1] - center[1], end[0] - center[0]);
 
     const polygonCoordinates = [];
@@ -148,6 +145,50 @@ const createStarGeometryFunction = (points, ratio) => {
     }
     return geometry;
   };
+};
+
+const createRectangleGeometryFunction = () => {
+  return (coordinates, geometry) => {
+    const start = coordinates[0];
+    const end = coordinates[1];
+
+    const rectangleCoordinates = [
+      start,
+      [start[0], end[1]],
+      end,
+      [end[0], start[1]],
+      start,
+    ];
+
+    if (!geometry) {
+      geometry = new Polygon([rectangleCoordinates]);
+    } else {
+      geometry.setCoordinates([rectangleCoordinates]);
+    }
+
+    return geometry;
+  };
+};
+
+const vectorLayerStyle = new Style({
+  fill: new Fill({
+    color: "rgba(255, 255, 255, 0.2)",
+  }),
+  stroke: new Stroke({
+    color: "#ffcc33",
+    width: 2,
+  }),
+  image: new CircleStyle({
+    radius: 7,
+    fill: new Fill({
+      color: "#ffcc33",
+    }),
+  }),
+});
+
+const mapContainer = {
+  width: "100%",
+  height: "100vh",
 };
 
 export default DrawingMap;

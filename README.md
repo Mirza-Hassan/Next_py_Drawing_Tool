@@ -89,7 +89,7 @@ With the development server running, navigate to http://localhost:8000/api/shape
 
 # API Testing 
 
-You can test the API endpoints using tools like Postman or curl.
+You can test the API endpoints using tools like Postman or shapes.curl file.
 
 Create a new shape: POST /api/shapes/
 ```

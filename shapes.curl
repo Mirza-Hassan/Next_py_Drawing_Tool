@@ -1,0 +1,14 @@
+curl --location 'http://localhost:8000/api/shapes/' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Basic YWRtaW46MTIz' \
+--header 'Cookie: token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE2NjAxMzAzLCJleHAiOjE3MTcwMzMzMDN9.aOVrlr9wq-Ht0cUNXFMi-Wy_8V8W_qj4txw7IxO-jKw; token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzE2NjAxMzAzLCJleHAiOjE3MTcwMzMzMDN9.aOVrlr9wq-Ht0cUNXFMi-Wy_8V8W_qj4txw7IxO-jKw' \
+--data '{
+      "shape_type": "circle",
+      "geometry": [[
+        [-73.935242, 40.730610],
+        [-73.935242, 40.731610],
+        [-73.934242, 40.731610],
+        [-73.934242, 40.730610],
+        [-73.935242, 40.730610]
+      ]]
+}'

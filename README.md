@@ -89,20 +89,20 @@ With the development server running, navigate to http://localhost:8000/api/shape
 
 # API Testing 
 
-You can test the API endpoints using tools like Postman or shapes.curl file.
+You can test the API endpoints using tools like Postman or curl file.
 
 Create a new shape: 
 
-URL: /api/shapes/
+**URL**: /api/shapes/
 
-Method: POST
+**Method**: POST
 
-Body Parameters:
+**Body Parameters:**
 
-shape_type (string): Type of shape (e.g., "star").
-geometry (array): Coordinates as nested arrays.
+- shape_type (string): Type of shape (e.g., "star").
+- geometry (array): Coordinates as nested arrays.
 
-Request Example:
+**Request Example:**
 ```
 curl --location 'http://localhost:8000/api/shapes/' \
 --header 'Content-Type: application/json' \

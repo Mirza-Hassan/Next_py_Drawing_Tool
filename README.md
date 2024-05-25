@@ -22,9 +22,9 @@ Develop Interactive Drawing Tool is a web application that allows users to inter
 - Python and pip installed
 - Django and Django REST framework installed
 
-# Folder Structure
+# Folder Structure!
 
-![fs](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/cd68fe3b-9efb-4b20-a46e-4187d8574857)
+![fs](https://github.com/Mirza-Hassan/Next_py_Drawing_Tool/assets/17096257/6bf980c5-0ba0-414c-a631-ad3c54d57143)
 
 
 # Setup Instructions

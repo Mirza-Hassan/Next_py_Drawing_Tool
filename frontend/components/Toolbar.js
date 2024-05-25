@@ -6,7 +6,7 @@ const Toolbar = ({ setDrawType }) => {
       <button style={buttonStyle} onClick={() => setDrawType("Circle")}>
         Circle
       </button>
-      <button style={buttonStyle} onClick={() => setDrawType("Polygon")}>
+      <button style={buttonStyle} onClick={() => setDrawType("Rectangle")}>
         Rectangle
       </button>
       <button style={buttonStyle} onClick={() => setDrawType("Star")}>

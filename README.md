@@ -64,7 +64,6 @@ Ensure your database schema is up to date with your models by running the follow
 ```
 python manage.py makemigrations
 python manage.py migrate
-
 ```
 Create a superuser to access the admin panel:
 ```

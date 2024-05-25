@@ -54,18 +54,28 @@ Navigate to the backend directory:
 ```
 cd backend
 ```
-Install dependencies:
+Install dependencies: (Optional)
 ```
-pip install django djangorestframework
+pip install django djangorestframework 
+pip install django-cors-headers        
 ```
-Create and apply migrations:
+Configuring settings.py  (Optional)
 
-Ensure your database schema is up to date with your models by running the following commands:
+Add the installed apps to your INSTALLED_APPS:
+```
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'drawings',
+    'corsheaders',
+]
+```
+Running Migrations (Optional)
 ```
 python manage.py makemigrations
 python manage.py migrate
 ```
-Create a superuser to access the admin panel:
+Create a superuser to access the admin panel: (Optional)
 ```
 python manage.py createsuperuser
 ```
@@ -75,7 +85,7 @@ python manage.py runserver
 ```
 Test your API endpoint:
 
-With the development server running, navigate to http://localhost:8000/api/shapes/. If you have populated data, it should be displayed here.
+With the development server running, navigate to http://localhost:8000/api/shapes/
 
 # API Testing 
 
